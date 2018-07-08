@@ -4,7 +4,7 @@
  */
 
 
-var createHookPoint = require("../src/hook4src.js").createHookPoint;
+var createHookPoint = require("../../src/hook4src.js").createHookPoint;
 var hook = createHookPoint( exports, "hook" );
 
 hook[ "localApi1" ] = function (params) {
