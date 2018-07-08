@@ -9,9 +9,9 @@ var assert = chai.assert;
 var sinon = require("sinon");
 var promiseTestHelper = require("promise-test-helper");
 var shouldFulfilled = promiseTestHelper.shouldFulfilled;
-var hookProperty = require("../src/hook4test.js").hookProperty;
+var hookProperty = require("hook-test-helper").hookProperty;
 
-var target = require("../sample/sample_design.js");
+var target = require("../src/sample_design.js");
 
 
 describe("TEST for sample_design.js", function(){
