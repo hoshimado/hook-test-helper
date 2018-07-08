@@ -16,13 +16,9 @@ var target = require("../src/hook4src.js");
 describe("TEST for hook4src.js", function(){
     // this.timeout( 5000 );
     var createHookPoint = target.createHookPoint;
-    beforeEach(()=>{ // フック前の関数を保持する。
-        // helper4stubed.hookProperty( hook, stubs );
-        // console.log( hook );
+    beforeEach(()=>{
 	});
-    afterEach(()=>{ // フックした（かもしれない）関数を、元に戻す。
-        // helper4stubed.restoreProperty( hook );
-        // console.log( hook );
+    afterEach(()=>{
 	});
 
     describe("createHookPoint()",function(){
@@ -50,7 +46,7 @@ describe("TEST for hook4src.js", function(){
 
         it("don't set the object in property of exports when NODE_ENV is undefined.", function () {
             var original_vaule = process.env.NODE_ENV;
-            process.env.NODE_ENV = undefined; // before
+            process.env.NODE_ENV = undefined; // before - setup.
 
             var outputPoint = {}; // fake as exports.
             var nameVar = "innerInstance";
@@ -58,7 +54,7 @@ describe("TEST for hook4src.js", function(){
 
             expect( outputPoint ).to.not.have.property( nameVar );
             
-            process.env.NODE_ENV = original_vaule; // after
+            process.env.NODE_ENV = original_vaule; // after - teardown.
         });
     });
 });

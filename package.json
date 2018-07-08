@@ -1,6 +1,6 @@
 {
   "name": "hook-test-helper",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "helper for hook in test",
   "main": "index.js",
   "directories": {

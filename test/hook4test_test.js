@@ -17,13 +17,9 @@ describe("TEST for hook4test.js", function(){
     // this.timeout( 5000 );
     var hookProperty = target.hookProperty;
     var restoreProperty = target.restoreProperty;
-    beforeEach(()=>{ // フック前の関数を保持する。
-        // helper4stubed.hookProperty( hook, stubs );
-        // console.log( hook );
+    beforeEach(()=>{
 	});
-    afterEach(()=>{ // フックした（かもしれない）関数を、元に戻す。
-        // helper4stubed.restoreProperty( hook );
-        // console.log( hook );
+    afterEach(()=>{
 	});
 
     describe("hookProperty()",function(){
@@ -54,10 +50,10 @@ describe("TEST for hook4test.js", function(){
 
             base_module.hook1.api1();
             expect( api11.callCount ).to.equal( 0 );
-            assert( stubs1.api1.calledOnce, "差し替えた先のstubs::api1()を1度だけ呼ぶ。" );
+            assert( stubs1.api1.calledOnce, "stubs1::api1() is called onec." );
             base_module.hook1.api2();
             expect( api12.callCount ).to.equal( 0 );
-            assert( stubs1.api2.calledOnce, "差し替えた先のstubs::api1()を1度だけ呼ぶ。" );
+            assert( stubs1.api2.calledOnce, "stubs1::api2() is called onec." );
 
             base_module.hook2.api3();
             expect( api21.callCount ).to.equal( 1 );
@@ -102,17 +98,17 @@ describe("TEST for hook4test.js", function(){
 
             base_module.hook1.api1();
             expect( api11.callCount ).to.equal( 0 );
-            assert( stubs1.api1.calledOnce, "差し替えた先のstubs::api1()を1度だけ呼ぶ。" );
+            assert( stubs1.api1.calledOnce, "stubs1::api1() is called onec." );
             base_module.hook1.api2();
             expect( api12.callCount ).to.equal( 0 );
-            assert( stubs1.api2.calledOnce, "差し替えた先のstubs::api1()を1度だけ呼ぶ。" );
+            assert( stubs1.api2.calledOnce, "stubs1::api2() is called onec." );
 
             base_module.hook2.api3();
             expect( api21.callCount ).to.equal( 0 );
-            assert( stubs2.api3.calledOnce, "差し替えた先のstubs::api3()を1度だけ呼ぶ。" );
+            assert( stubs2.api3.calledOnce, "stubs2::api3() is called onec." );
             base_module.hook2.api4();
             expect( api22.callCount ).to.equal( 0 );
-            assert( stubs2.api4.calledOnce, "差し替えた先のstubs::api4()を1度だけ呼ぶ。" );
+            assert( stubs2.api4.calledOnce, "stubs2::api4() is called onec." );
 
             hookedInstance1.restore();
             hookedInstance2.restore();

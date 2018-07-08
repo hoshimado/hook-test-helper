@@ -7,19 +7,19 @@ var createHookPoint = require("../src/hook4src.js").createHookPoint;
 var hook = createHookPoint(exports, "hook");
 
 hook["open"] = function(){
-    // ここは未実装。
+    // This is not implemented.
     return Promise.reject();
 };
 hook["doSomething"] = function () {
-    // ここは未実装。
+    // This is not implemented.
     return Promise.reject();
 };
 hook["close"] = function() {
-    // ここは未実装。
+    // This is not implemented.
     return Promise.reject();
 };
 
-// これだけ実装。
+// This is implemented.
 exports.method1 = function(keyword) {
     var value = {};
     return hook.open(keyword).then(function (handle) {

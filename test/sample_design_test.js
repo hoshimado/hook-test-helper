@@ -18,7 +18,7 @@ describe("TEST for sample_design.js", function(){
     var method1 = target.method1;
     var stubbed = {};
     var stubs;
-    beforeEach(()=>{ // フック前の関数を保持する。
+    beforeEach(()=>{
         stubs = {
             "open" : sinon.stub(),
             "close" : sinon.stub(),
@@ -26,7 +26,7 @@ describe("TEST for sample_design.js", function(){
         };
         stubbed["hook"] = hookProperty(target.hook, stubs);
 	});
-    afterEach(()=>{ // フックした（かもしれない）関数を、元に戻す。
+    afterEach(()=>{
         stubbed.hook.restore();
 	});
 
