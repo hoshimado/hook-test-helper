@@ -3,12 +3,9 @@
  * encoding=utf-8
  */
 
-var orignal = process.env.NODE_ENV;
-process.env.NODE_ENV = "development";
 var calledApi = require("./calledApi.js");
-process.env.NODE_ENV = orignal;
 
-var hookProperty = require("../../src/hook4test.js").hookProperty;
+var hookProperty = require("hook-test-helper").hookProperty;
 
 
 exports.method1 = function () {
