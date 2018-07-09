@@ -37,13 +37,7 @@ RESTORE_MANAGER.prototype.restore = function () {
 };
 
 
-/**
- * 指定されたオブジェクトのプロパティを全て退避＆undefinedに設定した後に、
- * 指定したstubのプロパティを接続し直す。
- * 
- * @param {*} targetObject     プロパティを差し替えるオブジェクト。
- * @param {*} stubPropertyMap  差換え後のオブジェクト。これが接続される。
- */
+
 var hookProperty = function ( targetObject, stubPropertyMap ) {
 	var originalMaps = {};
 	var stubed = targetObject;
@@ -51,16 +45,12 @@ var hookProperty = function ( targetObject, stubPropertyMap ) {
 	var keys = Object.keys( targetObject );
 	var n = keys.length;
 
-	// オリジナルのpropertyを退避する
 	while(0<n--){
 		originalMaps[ keys[n] ] = targetObject[ keys[n] ];
 
-		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators
-		// delete演算子も検討したが「意図しないプロパティが居る」ことが分かるように、indefined代入とした。
 		targetObject[ keys[n] ] = undefined;
 	}
 
-	// スタブとして渡されたpropertyへ差換える。
 	keys = Object.keys( stubPropertyMap );
 	n = keys.length;
 	while(0<n--){
