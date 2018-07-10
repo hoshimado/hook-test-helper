@@ -37,6 +37,7 @@ RESTORE_MANAGER.prototype.restore = function () {
 };
 
 
+
 var hookProperty = function ( targetObject, stubPropertyMap ) {
 	var originalMaps = {};
 	var stubed = targetObject;
@@ -59,6 +60,7 @@ var hookProperty = function ( targetObject, stubPropertyMap ) {
 	return new RESTORE_MANAGER( targetObject, originalMaps );
 };
 exports.hookProperty = hookProperty;
+
 
 
 

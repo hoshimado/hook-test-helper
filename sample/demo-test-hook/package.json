@@ -1,0 +1,25 @@
+{
+  "name": "demo-test-hook",
+  "version": "1.0.0",
+  "description": "demo for hook in test",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "cross-env NODE_ENV=development node_modules/.bin/mocha"
+  },
+  "author": "hoshimado",
+  "license": "MIT",
+  "dependencies": {
+    "hook-test-helper": "0.0.1",
+    "sqlite3": "^4.0.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "cross-env": "^5.2.0",
+    "mocha": "^5.2.0",
+    "promise-test-helper": "^0.2.1",
+    "sinon": "^6.1.3"
+  }
+}

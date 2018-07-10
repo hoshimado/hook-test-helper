@@ -3,7 +3,7 @@
  * encoding=utf-8
  */
 
-var createHookPoint = require("../src/hook4src.js").createHookPoint;
+var createHookPoint = require("hook-test-helper").createHookPoint;
 var hook = createHookPoint(exports, "hook");
 
 hook["open"] = function(){
