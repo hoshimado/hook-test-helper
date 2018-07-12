@@ -1,4 +1,4 @@
-# hook-test-helper
+# hook-test-helper [![Build Status](https://travis-ci.org/hoshimado/hook-test-helper.svg?branch=master)](https://travis-ci.org/hoshimado/hook-test-helper)
 
 `hook-test-helper` is library for hooking local variable on your test.
 
