@@ -69,6 +69,12 @@ var hookProperty = function ( targetObject, stubPropertyMap ) {
 	}
 
 	// replace properties with stub properties.
+	while(0<n--){
+		originalMaps[ keys[n] ] = targetObject[ keys[n] ];
+
+		targetObject[ keys[n] ] = undefined;
+	}
+
 	keys = Object.keys( stubPropertyMap );
 	n = keys.length;
 	while(0<n--){
