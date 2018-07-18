@@ -129,7 +129,16 @@ describe("TEST for hook4test.js", function(){
             };
             var hookedInstance = hookProperty( null, stubsMap );
 
-            expect( hookedInstance ).to.equal.null;
+            expect( hookedInstance ).to.be.null;
+        });
+        it("returns null when the stubsMap is not Object. (it can't set.)", function () {
+            var base_module = {
+                "localFunc" : sinon.stub()
+            };
+            var stubsMap = 1; // not Object.
+            var hookedInstance = hookProperty( base_module.localFunc, stubsMap );
+
+            expect( hookedInstance ).to.be.null;
         });
        
     });

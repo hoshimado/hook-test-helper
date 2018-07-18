@@ -5,11 +5,11 @@
 */
 
 /**
- * 環境変数 NODE_ENV==development の時に、指定した変数名で「外部公開設定済み」の変数を返却する。
+ * If Environment variable is 'NODE_ENV==development' , this returns the variable which is set as external with the specified variable name.
  * 
- * @param {*}      exportsInstance Modules.exports を指定する
- * @param {String} variableName    外部公開するHookポイントの変数名を文字列で指定する。
- * @param {*}      existInstance   設定するインスタンス。省略した場合は、内部でオブジェクト{}を自動生成する。 
+ * @param {*}      exportsInstance Specify 'Modules.exports'.
+ * @param {String} variableName    Specify the variable name of the external hook point  with a character string.
+ * @param {*}      existInstance   Specify Instance of the object which you want to hook in testing. If omitted, the object {} is automatically generated internally. 
  */
 var createHookPoint = function ( exportsInstance, variableName, existInstance ) {
 	var instance = (existInstance) ? existInstance : {};

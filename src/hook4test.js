@@ -38,33 +38,41 @@ RESTORE_MANAGER.prototype.restore = function () {
 
 
 /**
- * 指定されたオブジェクトのプロパティを全て退避＆undefinedに設定した後に、
- * 指定したstubのプロパティを接続し直す。
+ * After saving all the properties of the specified object and setting them undefined, 
+ * connect the property of the specified stub again.
  * 
- * @param {*} targetObject     プロパティを差し替えるオブジェクト。
- * @param {*} stubPropertyMap  差換え後のオブジェクト。これが接続される。
+ * @param {*} targetObject     the property of this object will be replaced.
+ * @param {*} stubPropertyMap  this map will be connected as new property.
  */
 var hookProperty = function ( targetObject, stubPropertyMap ) {
 	var originalMaps = {};
-	var stubed = targetObject;
+	var keys, n;
 
-	var keys = Object.keys( targetObject );
-	var n = keys.length;
+	if( !targetObject ){
+		return targetObject;
+	}
+	if( typeof stubPropertyMap != "object" ){
+		return null;
+	}
 
-	// オリジナルのpropertyを退避する
+	// 	save the original property.
+	keys = Object.keys( targetObject );
+	n = keys.length;
 	while(0<n--){
 		originalMaps[ keys[n] ] = targetObject[ keys[n] ];
 
 		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators
-		// delete演算子も検討したが「意図しないプロパティが居る」ことが分かるように、indefined代入とした。
+		// 
+		// I also considered the delete operator, but I decided to set undefined 
+		// so that I can see that there is invalid property clearly.
 		targetObject[ keys[n] ] = undefined;
 	}
 
-	// スタブとして渡されたpropertyへ差換える。
+	// replace properties with stub properties.
 	keys = Object.keys( stubPropertyMap );
 	n = keys.length;
 	while(0<n--){
-		stubed[ keys[n] ] = stubPropertyMap[ keys[n] ];
+		targetObject[ keys[n] ] = stubPropertyMap[ keys[n] ];
 	}
 
 	return new RESTORE_MANAGER( targetObject, originalMaps );
