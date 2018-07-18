@@ -56,6 +56,13 @@ describe("TEST for hook4src.js", function(){
             
             process.env.NODE_ENV = original_vaule; // after - teardown.
         });
+
+        it("returns null when 1st param [outputPoint] is null.", function () {
+            var nameVar = "innerInstance";
+            var innerInstance = target.createHookPoint( null, nameVar );
+
+            expect( innerInstance ).to.be.null;
+        });
     });
 });
 

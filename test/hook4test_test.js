@@ -123,7 +123,23 @@ describe("TEST for hook4test.js", function(){
             expect( api22.callCount ).to.equal( 1 );
 
         });
-        it("tries to hook null.");
+        it("returns null when the targetObject is null.", function () {
+            var stubsMap = {
+                "method1" : function () { return "dummy"; }
+            };
+            var hookedInstance = hookProperty( null, stubsMap );
+
+            expect( hookedInstance ).to.be.null;
+        });
+        it("returns null when the stubsMap is not Object. (it can't set.)", function () {
+            var base_module = {
+                "localFunc" : sinon.stub()
+            };
+            var stubsMap = 1; // not Object.
+            var hookedInstance = hookProperty( base_module.localFunc, stubsMap );
+
+            expect( hookedInstance ).to.be.null;
+        });
        
     });
 });

@@ -37,14 +37,38 @@ RESTORE_MANAGER.prototype.restore = function () {
 };
 
 
-
+/**
+ * After saving all the properties of the specified object and setting them undefined, 
+ * connect the property of the specified stub again.
+ * 
+ * @param {*} targetObject     the property of this object will be replaced.
+ * @param {*} stubPropertyMap  this map will be connected as new property.
+ */
 var hookProperty = function ( targetObject, stubPropertyMap ) {
 	var originalMaps = {};
-	var stubed = targetObject;
+	var keys, n;
 
-	var keys = Object.keys( targetObject );
-	var n = keys.length;
+	if( !targetObject ){
+		return targetObject;
+	}
+	if( typeof stubPropertyMap != "object" ){
+		return null;
+	}
 
+	// 	save the original property.
+	keys = Object.keys( targetObject );
+	n = keys.length;
+	while(0<n--){
+		originalMaps[ keys[n] ] = targetObject[ keys[n] ];
+
+		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators
+		// 
+		// I also considered the delete operator, but I decided to set undefined 
+		// so that I can see that there is invalid property clearly.
+		targetObject[ keys[n] ] = undefined;
+	}
+
+	// replace properties with stub properties.
 	while(0<n--){
 		originalMaps[ keys[n] ] = targetObject[ keys[n] ];
 
@@ -54,7 +78,7 @@ var hookProperty = function ( targetObject, stubPropertyMap ) {
 	keys = Object.keys( stubPropertyMap );
 	n = keys.length;
 	while(0<n--){
-		stubed[ keys[n] ] = stubPropertyMap[ keys[n] ];
+		targetObject[ keys[n] ] = stubPropertyMap[ keys[n] ];
 	}
 
 	return new RESTORE_MANAGER( targetObject, originalMaps );

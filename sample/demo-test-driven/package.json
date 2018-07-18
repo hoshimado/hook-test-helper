@@ -20,7 +20,7 @@
     "sinon": "^6.1.0"
   },
   "dependencies": {
-    "hook-test-helper": "0.0.1",
+    "hook-test-helper": "^0.0.2",
     "sqlite3": "^4.0.1"
   }
 }
