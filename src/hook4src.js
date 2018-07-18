@@ -12,7 +12,13 @@
  * @param {*}      existInstance   Specify Instance of the object which you want to hook in testing. If omitted, the object {} is automatically generated internally. 
  */
 var createHookPoint = function ( exportsInstance, variableName, existInstance ) {
-	var instance = (existInstance) ? existInstance : {};
+	var instance;
+	
+	if( !exportsInstance ){
+		return null;
+	}
+
+	instance = (existInstance) ? existInstance : {};
 	if( process.env.NODE_ENV == "development" ){
 		exportsInstance[ variableName ] = instance;
 	}
