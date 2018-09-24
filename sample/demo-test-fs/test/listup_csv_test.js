@@ -1,5 +1,5 @@
 /**
- * [listup_yaml_output_csv.js]
+ * [listup_csv_test.js]
  *   encoding=UTF8
  */
 
@@ -12,9 +12,9 @@ var shouldRejected = require("promise-test-helper").shouldRejected;
 var hookProperty = require("hook-test-helper").hookProperty; // for test code.
 
 
-var target = require("../src/listup_yaml_output.js");
+var target = require("../src/listup_csv.js");
 
-describe("TEST for listup_yaml_output_csv.js", function(){
+describe("TEST for listup_csv_csv.js", function(){
     describe("::createOutputFileFromInputPath()", function () {
         var createOutputFileFromInputPath = target.createOutputFileFromInputPath;
 
@@ -60,11 +60,12 @@ describe("TEST for listup_yaml_output_csv.js", function(){
         it("Yamlファイルが格納されたディレクトリ（1つ下のサブを含む）から、Yamlファイルのパスを全て取得する",function () {
             var TARGET_DIR = "./data/in-stub"; 
             var EXPECTED_LIST = [
-                './data/in-stub/sub2/v2018.01.yaml',
-                './data/in-stub/sub2/v2018.02.yaml',
-                './data/in-stub/sub1/v2017.01.yaml',
-                './data/in-stub/sub1/v2017.02.yaml',
-                './data/in-stub/moreDeep/hoge.pdf',
+                './data/in-stub/sub2/v2018.01.csv',
+                './data/in-stub/sub2/v2018.02.csv',
+                './data/in-stub/sub1/v2017.01.csv',
+                './data/in-stub/sub1/v2017.02.csv',
+                './data/in-stub/sub1/v2017.03.csv',
+                './data/in-stub/moreDeep/hoge.txt',
                 './data/in-stub/moreDeep/piyo/' // 個の下は2階層下なので「limit.txt」は拾わないこと。
             ];
 
@@ -117,22 +118,24 @@ describe("TEST for listup_yaml_output_csv.js", function(){
             .callsArgWith(1, /* err= */ null, /* stats= */ {"isDirectory" : function (){return true;}} );
 
             targetStubs.fs.readdir.withArgs("./data/in-stub/sub1")
-            .callsArgWith(2, /* err= */ null, /* files= */ ["v2017.01.yaml","v2017.02.yaml"] );
-            targetStubs.fs.stat.withArgs("./data/in-stub/sub1/v2017.01.yaml")
+            .callsArgWith(2, /* err= */ null, /* files= */ ["v2017.01.csv","v2017.02.csv","v2017.03.csv"] );
+            targetStubs.fs.stat.withArgs("./data/in-stub/sub1/v2017.01.csv")
             .callsArgWith(1, /* err= */ null, /* stats= */ {"isDirectory" : function (){return false;}} );
-            targetStubs.fs.stat.withArgs("./data/in-stub/sub1/v2017.02.yaml")
+            targetStubs.fs.stat.withArgs("./data/in-stub/sub1/v2017.02.csv")
+            .callsArgWith(1, /* err= */ null, /* stats= */ {"isDirectory" : function (){return false;}} );
+            targetStubs.fs.stat.withArgs("./data/in-stub/sub1/v2017.03.csv")
             .callsArgWith(1, /* err= */ null, /* stats= */ {"isDirectory" : function (){return false;}} );
 
             targetStubs.fs.readdir.withArgs("./data/in-stub/sub2")
-            .callsArgWith(2, /* err= */ null, /* files= */ ["v2018.01.yaml","v2018.02.yaml"] );
-            targetStubs.fs.stat.withArgs("./data/in-stub/sub2/v2018.01.yaml")
+            .callsArgWith(2, /* err= */ null, /* files= */ ["v2018.01.csv","v2018.02.csv"] );
+            targetStubs.fs.stat.withArgs("./data/in-stub/sub2/v2018.01.csv")
             .callsArgWith(1, /* err= */ null, /* stats= */ {"isDirectory" : function (){return false;}} );
-            targetStubs.fs.stat.withArgs("./data/in-stub/sub2/v2018.02.yaml")
+            targetStubs.fs.stat.withArgs("./data/in-stub/sub2/v2018.02.csv")
             .callsArgWith(1, /* err= */ null, /* stats= */ {"isDirectory" : function (){return false;}} );
 
             targetStubs.fs.readdir.withArgs("./data/in-stub/moreDeep")
-            .callsArgWith(2, /* err= */ null, /* files= */ ["hoge.pdf","piyo"] );
-            targetStubs.fs.stat.withArgs("./data/in-stub/moreDeep/hoge.pdf")
+            .callsArgWith(2, /* err= */ null, /* files= */ ["hoge.txt","piyo"] );
+            targetStubs.fs.stat.withArgs("./data/in-stub/moreDeep/hoge.txt")
             .callsArgWith(1, /* err= */ null, /* stats= */ {"isDirectory" : function (){return false;}} );
             targetStubs.fs.stat.withArgs("./data/in-stub/moreDeep/piyo")
             .callsArgWith(1, /* err= */ null, /* stats= */ {"isDirectory" : function (){return true;}} );
@@ -146,11 +149,12 @@ describe("TEST for listup_yaml_output_csv.js", function(){
         it("Yamlファイルが格納されたディレクトリ（1つ下のサブを含む）から、Yamlファイルのパスを全て取得する",function () {
             var TARGET_DIR = "./data/in-stub"; 
             var EXPECTED_LIST = [
-                './data/in-stub/sub2/v2018.01.yaml',
-                './data/in-stub/sub2/v2018.02.yaml',
-                './data/in-stub/sub1/v2017.01.yaml',
-                './data/in-stub/sub1/v2017.02.yaml',
-                './data/in-stub/moreDeep/hoge.pdf',
+                './data/in-stub/sub2/v2018.01.csv',
+                './data/in-stub/sub2/v2018.02.csv',
+                './data/in-stub/sub1/v2017.01.csv',
+                './data/in-stub/sub1/v2017.02.csv',
+                './data/in-stub/sub1/v2017.03.csv',
+                './data/in-stub/moreDeep/hoge.txt',
                 './data/in-stub/moreDeep/piyo/' // 個の下は2階層下なので「limit.txt」は拾わないこと。
             ];
             setupFsStubs(stubs);
