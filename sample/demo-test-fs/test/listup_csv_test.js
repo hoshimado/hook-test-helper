@@ -20,22 +20,22 @@ describe("TEST for listup_csv_csv.js", function(){
 
         it("インプットpathを元に、単一フォルダへの出力パス（拡張子無し）を生成する", function () {
             var list = [
-                "./data/in-stub/sub2/v2018.01.yaml",
-                "./data/in-stub/sub2/v2018.02.yaml",
-                "./data/in-stub/sub1/v2017.01.yaml"
+                "./data/in-stub/sub2/v2018.01.csv",
+                "./data/in-stub/sub2/v2018.02.csv",
+                "./data/in-stub/sub1/v2017.01.csv"
             ];
             var pair = createOutputFileFromInputPath( list, "./data/out-diff" );
             var EXPECTED_PAIR = [
                 {
-                    "inputPath"             : "./data/in-stub/sub2/v2018.01.yaml",
+                    "inputPath"             : "./data/in-stub/sub2/v2018.01.csv",
                     "outFilePathWithoutExt" : "./data/out-diff/v2018.01"
                 },
                 {
-                    "inputPath"             : "./data/in-stub/sub2/v2018.02.yaml",
+                    "inputPath"             : "./data/in-stub/sub2/v2018.02.csv",
                     "outFilePathWithoutExt" : "./data/out-diff/v2018.02"
                 },
                 {
-                    "inputPath"             : "./data/in-stub/sub1/v2017.01.yaml",
+                    "inputPath"             : "./data/in-stub/sub1/v2017.01.csv",
                     "outFilePathWithoutExt" : "./data/out-diff/v2017.01"
                 }
             ];
@@ -57,7 +57,7 @@ describe("TEST for listup_csv_csv.js", function(){
     describe("::listupSubDirectryPath() - actual with [data/in-stub]",function () {
         var listupSubDirectoryPath = target.hook.listupSubDirectoryPath;
 
-        it("Yamlファイルが格納されたディレクトリ（1つ下のサブを含む）から、Yamlファイルのパスを全て取得する",function () {
+        it("csvファイルが格納されたディレクトリ（1つ下のサブを含む）から、csvファイルのパスを全て取得する",function () {
             var TARGET_DIR = "./data/in-stub"; 
             var EXPECTED_LIST = [
                 './data/in-stub/sub2/v2018.01.csv',
@@ -146,7 +146,7 @@ describe("TEST for listup_csv_csv.js", function(){
             .callsArgWith(1, /* err= */ null, /* stats= */ {"isDirectory" : function (){return false;}} );
         };
 
-        it("Yamlファイルが格納されたディレクトリ（1つ下のサブを含む）から、Yamlファイルのパスを全て取得する",function () {
+        it("csvファイルが格納されたディレクトリ（1つ下のサブを含む）から、csvファイルのパスを全て取得する",function () {
             var TARGET_DIR = "./data/in-stub"; 
             var EXPECTED_LIST = [
                 './data/in-stub/sub2/v2018.01.csv',
@@ -178,8 +178,8 @@ describe("TEST for listup_csv_csv.js", function(){
             });
         });
     });
-    describe("::listupYamlPath()",function () {
-        var listupYamlPath = target.listupYamlPath;
+    describe("::listupCsvPath()",function () {
+        var listupCsvPath = target.listupCsvPath;
 
         var stubbedManager = {};
         var stubs;
@@ -193,13 +193,13 @@ describe("TEST for listup_csv_csv.js", function(){
             stubbedManager.hook.restore();
         });
 
-        it("yamlパスのみを拾い上げる。",function () {
+        it("csvパスのみを拾い上げる。",function () {
             var TARGET_DIR = "./data/in-stub"; 
             var ALL_LIST = [
-                './data/in-stub/sub2/v2018.01.yaml',
-                './data/in-stub/sub2/v2018.02.yaml',
-                './data/in-stub/sub1/v2017.01.yaml',
-                './data/in-stub/sub1/v2017.02.yaml',
+                './data/in-stub/sub2/v2018.01.csv',
+                './data/in-stub/sub2/v2018.02.csv',
+                './data/in-stub/sub1/v2017.01.csv',
+                './data/in-stub/sub1/v2017.02.csv',
                 './data/in-stub/moreDeep/hoge.pdf',
                 './data/in-stub/moreDeep/piyo/' // 個の下は2階層下なので「limit.txt」は拾わないこと。
             ];
@@ -207,13 +207,13 @@ describe("TEST for listup_csv_csv.js", function(){
             .returns( Promise.resolve(ALL_LIST) );
 
             return shouldFulfilled(
-                listupYamlPath( TARGET_DIR )
+                listupCsvPath( TARGET_DIR )
             ).then(function (result) {
                 expect( result ).to.deep.equal([
-                    './data/in-stub/sub2/v2018.01.yaml',
-                    './data/in-stub/sub2/v2018.02.yaml',
-                    './data/in-stub/sub1/v2017.01.yaml',
-                    './data/in-stub/sub1/v2017.02.yaml'
+                    './data/in-stub/sub2/v2018.01.csv',
+                    './data/in-stub/sub2/v2018.02.csv',
+                    './data/in-stub/sub1/v2017.01.csv',
+                    './data/in-stub/sub1/v2017.02.csv'
                 ]);
             });
         });

@@ -7,14 +7,29 @@ var createHookPoint = require("hook-test-helper").createHookPoint;
 var hook = createHookPoint( exports, "hook" );
 var path = require("path");
 
-// "cheerio", "js-yaml" を用いたテストもありか？
 // むしろ、TypeScriptに手を出すべき？
 
 
 hook["fs"] = require("fs");
 
+var promiseStat = function ( targetDir, name ) {
+    var targetPath = targetDir + "/" + name;
 
-var promiseReadDir = function (targetDir, directory2live) {
+    return new Promise(function (resolve2,reject2) {
+        hook.fs.stat( targetPath, function (err, stats) {
+            if(err){
+                reject2(err);
+            }else{
+                resolve2({
+                    "name" : name,
+                    "stats" : stats
+                });
+            }
+        })
+    });
+};
+
+var promiseReadDirRecursive = function (targetDir, directory2live) {
     return new Promise(function (resolve, reject) {
         hook.fs.readdir( targetDir, "utf8", function (err, files) {
             var n, promiseDirArray = [], targetPath;
@@ -23,22 +38,8 @@ var promiseReadDir = function (targetDir, directory2live) {
             }else{
                 n = files.length;
                 while(0<n--){
-                    targetPath = targetDir + "/" + files[n];
-
                     promiseDirArray.push(
-                        new Promise(function (resolve2,reject2) {
-                            var name = files[n];
-                            hook.fs.stat( targetPath, function (err, stats) {
-                                if(err){
-                                    reject2(err);
-                                }else{
-                                    resolve2({
-                                        "name" : name,
-                                        "stats" : stats
-                                    });
-                                }
-                            })
-                        })
+                        promiseStat( targetDir, files[n] )
                     );
                 }
                 Promise.all(promiseDirArray).then(function (results) {
@@ -57,7 +58,9 @@ var promiseReadDir = function (targetDir, directory2live) {
             if( results[n].stats.isDirectory() ){
 
                 if( directory2live > 0 ){
-                    promiseDirArray.push( promiseReadDir( targetPath, directory2live ) );
+                    promiseDirArray.push( 
+                        promiseReadDirRecursive( targetPath, directory2live ) 
+                    );
                 }else{
                     outputList.push( targetPath + "/" );
                 }
@@ -76,23 +79,28 @@ var promiseReadDir = function (targetDir, directory2live) {
 };
 
 hook["listupSubDirectoryPath"] = function ( targetDir ) {
-    return promiseReadDir( targetDir, 2 ).then(function (list) {
+    return promiseReadDirRecursive( targetDir, 2 ).then(function (list) {
         return Promise.resolve(list);
     });
 };
 
-exports.listupYamlPath = function ( targetDir ) {
+exports.listupCsvPath = function ( targetDir ) {
     return hook.listupSubDirectoryPath( targetDir )
     .then(function (allList) {
         var list = [], i, n = allList.length;
         for(i=0; i<n; i++){
-            if( ".yaml" == path.extname(allList[i]) ){
+            if( ".csv" == path.extname(allList[i]) ){
                 list.push( allList[i] );
             }
         }
         return Promise.resolve(list);
     });
 };
+
+
+
+
+
 
 var createPair = function ( inputPath, outDir ) {
     var finename = path.basename(inputPath, path.extname(inputPath));
